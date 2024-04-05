@@ -8,11 +8,11 @@ import copy
 # In Proceedings of the AAAI Conference on Artificial Intelligence (Vol. 36, No. 11, pp. 11882-11890).
 
 
-def post_epsilongreedy(preference_df, scores_df, candidate_ids, item_group_dict, epsilon, seed, fusion):
+def post_epsilongreedy(base_rankings_df, scores_df, candidate_ids, item_group_dict, epsilon, seed, fusion):
     if fusion == "borda":
-        consensus, cr_scores_df = BORDA(preference_df, candidate_ids)
+        consensus, cr_scores_df = BORDA(base_rankings_df, candidate_ids)
     if fusion == "COMBmnz":
-        consensus, cr_scores_df = COMBmnz(preference_df, scores_df, candidate_ids)
+        consensus, cr_scores_df = COMBmnz(base_rankings_df, scores_df, candidate_ids)
     return _epsilon_greedy(consensus, item_group_dict, cr_scores_df, epsilon, seed)
 
 def pre_epsilongreedy(preference_df, scores_df, candidate_ids, item_group_dict, epsilon, seed, fusion):

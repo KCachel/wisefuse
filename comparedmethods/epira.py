@@ -3,7 +3,6 @@ import pandas as pd
 #References: https://github.com/KCachel/Fairer-Together-Mitigating-Disparate-Exposure-in-Kemeny-Aggregation/blob/main/src/epira.py
 
 def calc_exposure_ratio(ranking, group_ids):
-
     unique_grps, grp_count_items = np.unique(group_ids, return_counts=True)
     num_items = len(ranking)
     exp_vals = exp_at_position_array(num_items)
@@ -184,8 +183,6 @@ def precedence_matrix_agreement(baseranks):
     :return: precedence matrix of disagreeing pair weights. Index [i,j] shows # agreements with i over j
     """
     num_rankers, num_items = baseranks.shape
-
-
     weight = np.zeros((num_items, num_items))
 
     pwin_cand = np.unique(baseranks[0]).tolist()

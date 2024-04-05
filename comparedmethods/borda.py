@@ -1,18 +1,18 @@
 import numpy as np
 import pandas as pd
 
-def BORDA(preference_df, candidate_ids):
+def BORDA(base_ranking_df, candidate_ids):
     """
     Calculate borda score per item.
-    :param preference_df:
+    :param base_ranking_df:
     :param candidate_ids:
     :return:
     """
-    num_rankings = len(preference_df.columns)
+    num_rankings = len(base_ranking_df.columns)
     borda_scores = {key: 0 for key in candidate_ids}
     num_items = len(candidate_ids) # use for borda count with same scores per ranking
     for r in range(0, num_rankings):
-        single_ranking = preference_df[preference_df.columns[r]]  # isolate ranking
+        single_ranking = base_ranking_df[base_ranking_df.columns[r]]  # isolate ranking
         single_ranking = np.array(
             single_ranking[~pd.isnull(single_ranking)]
         )  # drop any NaNs

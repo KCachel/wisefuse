@@ -8,11 +8,11 @@ import pandas as pd
 # https://github.com/ejohnson0430/fair_online_ranking/blob/master/algorithms/metrics.py
 
 
-def post_fairqueues(preference_df, scores_df, candidate_ids, item_group_dict,  fusion, ddp_thresh):
+def post_fairqueues(base_ranking_df, scores_df, candidate_ids, item_group_dict, fusion, ddp_thresh):
     if fusion == "borda":
-        consensus, cr_scores_df = BORDA(preference_df, candidate_ids)
+        consensus, cr_scores_df = BORDA(base_ranking_df, candidate_ids)
     if fusion == "COMBmnz":
-        consensus, cr_scores_df = COMBmnz(preference_df, scores_df, candidate_ids)
+        consensus, cr_scores_df = COMBmnz(base_ranking_df, scores_df, candidate_ids)
     return _fairqueues(consensus, item_group_dict, cr_scores_df, ddp_thresh)
 
 def pre_fairqueues(preference_df, scores_df, candidate_ids, item_group_dict, fusion, ddp_thresh):
@@ -41,9 +41,10 @@ def pre_fairqueues(preference_df, scores_df, candidate_ids, item_group_dict, fus
 def _fairqueues(single_ranking, item_group_dict, single_scores, ddp_thresh):
     """
     Function to format to Gupta et al. code. Note that their code assumes score is a unique id.
-    :param single_ranking:
-    :param item_group_dict:
-    :param single_scores:
+    :param single_ranking: Dataframe ranking items
+    :param item_group_dict: Dictionary where keys are items and values are groups
+    :param single_scores: Dataframe of item scores
+    :ddp_thresh: DDP value
     :return:
     """
     num_groups = len(np.unique(list(item_group_dict.values())))
@@ -69,6 +70,7 @@ def _fairqueues(single_ranking, item_group_dict, single_scores, ddp_thresh):
 
 
 #Below code from https://github.com/ejohnson0430/fair_online_ranking
+
 def fair_rerank(batch, past_exposures, ddp_thresh, num_groups):
     qs = np.zeros(num_groups, dtype=int)
     groups, queue_sizes = np.unique(batch[:,1].astype(int), return_counts=True)
@@ -173,10 +175,3 @@ def fair_online(batches, ddp_thresh, num_groups, past_exposures=None, debug=Fals
             print(f'FA*IR did not meet constraint on batch {i}: DDP {ddp}')
     return processed_batches
 
-# test_batches = np.load('german_val.npy', allow_pickle=True)
-# print("hi")
-# ddp_thresh = 0.1
-# num_groups = 4
-#
-# for batches in test_batches:
-#     fair_online(batches, ddp_thresh, num_groups)
