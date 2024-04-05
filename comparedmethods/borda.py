@@ -25,4 +25,4 @@ def BORDA(preference_df, candidate_ids):
     ids = list(borda_scores.keys())
     new_scores = [borda_scores[cand] for cand in ids]
     scores, ordered_candidate_ids = zip(*sorted(zip(new_scores, ids), reverse=True))
-    return pd.DataFrame(ordered_candidate_ids)
+    return pd.DataFrame(ordered_candidate_ids), pd.DataFrame(scores)

@@ -2,24 +2,28 @@ require(dplyr)
 require(reshape2)
 require(ggplot2)
 require(PerMallows)
+require(BayesMallows)
 
-Nalternatives = 200
+
 
 #Reference Rankings
 #Most unfair
 a = seq(1, 100, length.out=100)
+#rho0 <- seq(from = 1, to = 100, by = 1)
 
 #Sample Mallows Model
 
-for (disp in c(0, .2, .4, .6, .8, 1))
+for (disp in c(0, .02, .04, .06, .08, .1))
 {
   
   for (rr in c('a')){
-    set.seed(1)
+    set.seed(10)
     
     pi <- eval(parse(text = rr))
     dispersion <- disp
     Nvoters <- 50
+    #R <- sample_mallows(rho0 = rho0, alpha0 = disp, diagnostic = TRUE,
+                        #n_samples = 50, burnin = 1, thinning = 1)
     
     R <- rmm(Nvoters,pi,dispersion,"kendall", "distances")
     R <- R - 1 #go back to zero index
