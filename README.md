@@ -3,7 +3,7 @@
 
 Code and data for "WISE Fuse: Group Fairness Aware Rank Fusion". To reproduce
 the experiments run `adult.py` (adult data), `econf.py` (economic freedom data), `worldhappiness.py` (world happiness data),
-`ibmhr.py` (ibmhr data), `disjoint_study.py` (disjoint credit data), `synthetic_tuning.py` (dataset for comparing tuning parameter predictability)  and `synthetic_mallows.py` (Mallows base rankings - note the code to
+`ibmhr.py` (ibmhr data), `disjoint_study.py` (overlap credit data), `synthetic_tuning.py` (dataset for comparing tuning parameter predictability)  and `synthetic_mallows.py` (Mallows base rankings - note the code to
 generate the Mallows profiles themselves are in `data\synthetic-study\generate_mallows.R`). Next to produce the plots
 used in the paper run the script `plotting.R` in the `results/` folder.
 
